@@ -26,7 +26,6 @@ public class JoinedCustomerOrdersView {
       SELECT *
       FROM customers
       JOIN orders ON customers.customerId = orders.customerId
-      JOIN products ON products.productId = orders.productId
       WHERE customers.customerId = :customerId
       ORDER BY orders.createdTimestamp
       """)
@@ -49,23 +48,6 @@ public class JoinedCustomerOrdersView {
 
     public UpdateEffect<Customer> onEvent(CustomerEvent.CustomerAddressChanged event) {
       return effects().updateState(viewState().withAddress(event.newAddress()));
-    }
-  }
-
-  @Table("products") // <4>
-  @Subscribe.EventSourcedEntity(ProductEntity.class)
-  public static class Products extends View<Product> {
-    public UpdateEffect<Product> onEvent(ProductEvent.ProductCreated created) {
-      String id = updateContext().eventSubject().orElse("");
-      return effects().updateState(new Product(id, created.name(), created.price()));
-    }
-
-    public UpdateEffect<Product> onEvent(ProductEvent.ProductNameChanged event) {
-      return effects().updateState(viewState().withProductName(event.newName()));
-    }
-
-    public UpdateEffect<Product> onEvent(ProductEvent.ProductPriceChanged event) {
-      return effects().updateState(viewState().withPrice(event.newPrice()));
     }
   }
 

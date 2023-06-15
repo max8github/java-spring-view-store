@@ -34,10 +34,6 @@ public class JoinedCustomerOrdersViewIntegrationTest extends StoreViewIntegratio
       CustomerOrder customerOrder1 = customerOrders.get(0);
       assertEquals("O1234", customerOrder1.orderId());
       assertEquals("P123", customerOrder1.productId());
-      assertEquals("Super Duper Thingamajig", customerOrder1.productName());
-      assertEquals("USD", customerOrder1.price().currency());
-      assertEquals(123, customerOrder1.price().units());
-      assertEquals(45, customerOrder1.price().cents());
       assertEquals(42, customerOrder1.quantity());
       assertEquals("C001", customerOrder1.customerId());
       assertEquals("someone@example.com", customerOrder1.email());
@@ -48,10 +44,6 @@ public class JoinedCustomerOrdersViewIntegrationTest extends StoreViewIntegratio
       CustomerOrder customerOrder2 = customerOrders.get(1);
       assertEquals("O5678", customerOrder2.orderId());
       assertEquals("P987", customerOrder2.productId());
-      assertEquals("Awesome Whatchamacallit", customerOrder2.productName());
-      assertEquals("NZD", customerOrder2.price().currency());
-      assertEquals(987, customerOrder2.price().units());
-      assertEquals(65, customerOrder2.price().cents());
       assertEquals(7, customerOrder2.quantity());
       assertEquals("C001", customerOrder2.customerId());
       assertEquals("someone@example.com", customerOrder2.email());
@@ -74,22 +66,6 @@ public class JoinedCustomerOrdersViewIntegrationTest extends StoreViewIntegratio
       CustomerOrder customerOrder2 = customerOrders.get(1);
       assertEquals("O5678", customerOrder2.orderId());
       assertEquals("Some Name", customerOrder2.name());
-    }
-
-    String newProductName = "Thing Supreme";
-    changeProductName("P123", newProductName);
-
-    {
-      List<CustomerOrder> customerOrders =
-          awaitCustomerOrders("C001", orders -> newProductName.equals(orders.get(0).productName()));
-
-      CustomerOrder customerOrder1 = customerOrders.get(0);
-      assertEquals("O1234", customerOrder1.orderId());
-      assertEquals("Thing Supreme", customerOrder1.productName());
-
-      CustomerOrder customerOrder2 = customerOrders.get(1);
-      assertEquals("O5678", customerOrder2.orderId());
-      assertEquals("Awesome Whatchamacallit", customerOrder2.productName());
     }
   }
 

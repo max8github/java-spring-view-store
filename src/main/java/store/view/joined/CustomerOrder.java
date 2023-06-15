@@ -7,8 +7,6 @@ import store.product.domain.Money;
 public record CustomerOrder(
     String orderId,
     String productId,
-    String productName,
-    Money price,
     int quantity,
     String customerId,
     String email,
